@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# =============================================================================
+# cluster-helm — Helm release status with failure highlighting
+#
+# Usage:
+#   cluster-helm               # all namespaces
+#   cluster-helm -n <namespace> # specific namespace
+# =============================================================================
+set -euo pipefail
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/../k8-lib/config.sh"
+source "$SCRIPT_DIR/../k8-lib/common.sh"
+
+BOLD=$'\033[1m'
+CYAN=$'\033[0;36m'
+DIM=$'\033[2m'
+
+NS_FLAG="--all-namespaces"
+[[ "${1:-}" == "-n" && -n "${2:-}" ]] && NS_FLAG="-n $2"
+
+echo -e "${BOLD}${CYAN}Helm Releases${NC}  $(date '+%H:%M:%S')\n"
+
+printf "${BOLD}%-12s %-28s %-8s %-10s %-35s %s${NC}\n" \
+  "NAMESPACE" "RELEASE" "REV" "STATUS" "CHART" "UPDATED"
+echo "--------------------------------------------------------------------------------------------------------------"
+
+helm list $NS_FLAG --output json 2>/dev/null | \
+  python3 -c "
+import json, sys
+releases = json.load(sys.stdin)
+for r in sorted(releases, key=lambda x: (x.get('namespace',''), x.get('name',''))):
+    ns = r.get('namespace', '?')
+    name = r.get('name', '?')
+    rev = str(r.get('revision', '?'))
+    status = r.get('status', '?')
+    chart = r.get('chart', '?')
+    updated = r.get('updated', '?')[:19] if r.get('updated') else '?'
+
+    # Color by status
+    if status == 'deployed':
+        color = '\033[0;32m'  # green
+    elif status == 'failed':
+        color = '\033[0;31m'  # red
+        status += '  <--'
+    elif status in ('pending-install', 'pending-upgrade'):
+        color = '\033[1;33m'  # yellow
+    else:
+        color = '\033[0m'
+
+    print(f'{ns:<12s} {name:<28s} {rev:<8s} {color}{status:<10s}\033[0m {chart:<35s} {updated}')
+" 2>/dev/null
+
+echo ""
