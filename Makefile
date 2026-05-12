@@ -10,7 +10,7 @@ test:
 
 install:
 	@mkdir -p $(INSTALL_DIR)
-	@for f in cluster-*; do \
-		install -m 755 "$$f" "$(INSTALL_DIR)/$$f"; \
-		echo "✓ Installed $$f"; \
+	@for f in bin/cluster-*; do \
+		install -m 755 "$$f" "$(INSTALL_DIR)/$$(basename $$f)"; \
+		echo "✓ Installed $$(basename $$f)"; \
 	done
