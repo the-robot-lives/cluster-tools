@@ -96,23 +96,12 @@ NODE:.spec.nodeName \
 
   echo -e "${BOLD}${MAG}Cluster Status${NC}  $(date '+%H:%M:%S')"
 
-  # Group: Databases
-  print_section "Databases" "(timescaledb|mysqldb|redis|valkey)"
-
-  # Group: Search
-  print_section "Search" "(manticore|elasticsearch|opensearch)"
-
-  # Group: Applications
-  print_section "Applications" "(backend|frontend|wordpress|api|admin)"
-
-  # Group: Networking
-  print_section "Networking" "(pgbouncer|proxysql|haproxy)"
-
-  # Group: Infrastructure
-  print_section "Infrastructure" "(infisical|signoz|karpenter|nginx-ingress|lb-controller|cert-manager)"
-
-  # Group: Jobs
-  print_section "Jobs" "(indexer|migrat|job)"
+  print_section "Databases"      "${K8_STATUS_DB_PATTERN:-(timescaledb|mysqldb|redis|valkey)}"
+  print_section "Search"          "${K8_STATUS_SEARCH_PATTERN:-(manticore|elasticsearch|opensearch)}"
+  print_section "Applications"    "${K8_STATUS_APP_PATTERN:-(backend|frontend|wordpress|api|admin)}"
+  print_section "Networking"      "${K8_STATUS_NET_PATTERN:-(pgbouncer|proxysql|haproxy)}"
+  print_section "Infrastructure"  "${K8_STATUS_INFRA_PATTERN:-(infisical|signoz|karpenter|nginx-ingress|lb-controller|cert-manager)}"
+  print_section "Jobs"            "${K8_STATUS_JOB_PATTERN:-(indexer|migrat|job)}"
 
   echo ""
 }

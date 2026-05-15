@@ -11,6 +11,20 @@
 # =============================================================================
 set -euo pipefail
 
+# Pool name → display label mapping (override via K8_NODEPOOL_LABELS)
+# Format: "raw_name=display_label,raw_name=display_label,..."
+K8_NODEPOOL_LABELS="${K8_NODEPOOL_LABELS:-general=karpenter,indexer=karpenter:indexer,managed=eks}"
+declare -A POOL_LABELS=()
+IFS=',' read -ra _pairs <<< "$K8_NODEPOOL_LABELS"
+for _pair in "${_pairs[@]}"; do
+  _raw="${_pair%%=*}"
+  _label="${_pair#*=}"
+  POOL_LABELS[$_raw]="$_label"
+done
+map_pool_label() {
+  echo "${POOL_LABELS[$1]:-$1}"
+}
+
 # Build the joined dataset: nodepool, namespace/pod, ready, status, restarts, age, nodename
 DATA=$(join -1 1 -2 1 -o '1.2,2.2,2.3,2.4,2.5,2.6,2.1' \
   <(kubectl get nodes --no-headers \
@@ -54,12 +68,7 @@ for ns in $NAMESPACES; do
     [[ "$podns" != "$ns" ]] && continue
     pod="${nspod#*/}"
     # Map pool name
-    case "$pool" in
-      general) pool_label="karpenter" ;;
-      indexer)  pool_label="karpenter:indexer" ;;
-      managed)  pool_label="eks" ;;
-      *)        pool_label="$pool" ;;
-    esac
+    pool_label=$(map_pool_label "$pool")
     # Look up capacity type from node
     short_node="${nodename%%.*}"
     cap="${NODE_CAP[$short_node]:-?}"
@@ -81,10 +90,12 @@ kubectl get nodes --no-headers \
     type="${NODE_TYPE[$short]:-?}"
     cap="${NODE_CAP[$short]:-?}"
     zone="${NODE_ZONE[$short]:-?}"
-    case "$pool" in
-      managed) mgr="EKS managed" ;;
-      *)       mgr="Karpenter: $pool" ;;
-    esac
+    label=$(map_pool_label "$pool")
+    if [[ "$pool" == "managed" || "$label" == "eks" ]]; then
+      mgr="EKS managed"
+    else
+      mgr="Karpenter: $pool"
+    fi
     echo "| $short | $type | $cap | $zone | $mgr |"
   done
 echo ""
