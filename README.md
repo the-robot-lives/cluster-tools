@@ -16,7 +16,7 @@ make install    # Installs cluster-* tools to ~/.local/bin
 
 ## Configuration
 
-No config files required. Uses current `kubectl` context.
+Uses current `kubectl` context. Optionally reads `k8-util-config.yaml` for tier groupings and status patterns (see [k8-lib README](../k8-lib/README.md)). Every tool accepts `--config <path>` to specify an alternative config file.
 
 ## Tools
 
