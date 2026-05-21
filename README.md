@@ -28,6 +28,7 @@ Uses current `kubectl` context. Optionally reads `k8-util-config.yaml` for tier 
 | `cluster-helm` | Helm release status, color-coded by status |
 | `cluster-layout` | Node/PVC/PV layout as rendered markdown |
 | `cluster-manticore` | Manticore search status dashboard (readers, indexes, S3, jobs) |
+| `cluster-setup-telemetry` | Install OTel Collector + Fluent Bit on a VM/EC2 instance |
 
 ## Usage
 
@@ -41,3 +42,38 @@ cluster-helm                    # Helm releases with failure highlighting
 cluster-layout                  # Full cluster layout (requires glow)
 cluster-manticore               # Manticore search status (readers, S3, jobs)
 ```
+
+### cluster-setup-telemetry
+
+Installs `signoz-otel-collector` + Fluent Bit on a VM or EC2 instance, auto-detects local services (PostgreSQL, MySQL, Nginx, Redis, Docker), and generates complete OTel Collector + Fluent Bit configs pointing at a central OTLP endpoint.
+
+```bash
+cluster-setup-telemetry otel.example.com:4317                    # Basic setup
+cluster-setup-telemetry 10.0.1.50:4317 legacy-db-01             # With custom hostname label
+FORCE_REINSTALL=1 cluster-setup-telemetry otel.example.com:4317  # Overwrite existing
+```
+
+Requires root/sudo. Run on the target VM (not the dev machine).
+
+#### Configuration
+
+In `k8-util-config.yaml`:
+
+```yaml
+telemetry:
+  environment: production       # deployment.environment resource attribute
+  host_type: ec2                # host.type attribute (ec2 | vm | bare-metal)
+  otelcol_version: "0.129.12"  # signoz-otel-collector release version
+  resource_detectors: "env, system, ec2"
+  otelcol_memory_limit_mib: 512
+  otelcol_spike_limit_mib: 128
+```
+
+All values overridable via `K8_TELEMETRY_*` env vars. k8-lib is optional — the tool gracefully falls back to defaults on remote VMs without it installed.
+
+#### Service-Specific Environment Variables
+
+| Variable | Purpose |
+|----------|---------|
+| `PG_MONITOR_USER` / `PG_MONITOR_PASSWORD` | PostgreSQL monitoring credentials |
+| `MYSQL_MONITOR_USER` / `MYSQL_MONITOR_PASSWORD` | MySQL monitoring credentials |
