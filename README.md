@@ -27,6 +27,7 @@ Uses current `kubectl` context. Optionally reads `k8-util-config.yaml` for tier 
 | `cluster-resources` | Per-pod CPU/RAM usage vs requests (needs metrics-server) |
 | `cluster-helm` | Helm release status, color-coded by status |
 | `cluster-layout` | Node/PVC/PV layout as rendered markdown |
+| `cluster-manticore` | Manticore search status dashboard (readers, indexes, S3, jobs) |
 
 ## Usage
 
@@ -38,4 +39,5 @@ cluster-nodes --pods            # Nodes with pod placement
 cluster-resources               # Resource usage (requires metrics-server)
 cluster-helm                    # Helm releases with failure highlighting
 cluster-layout                  # Full cluster layout (requires glow)
+cluster-manticore               # Manticore search status (readers, S3, jobs)
 ```
