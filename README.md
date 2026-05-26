@@ -16,7 +16,7 @@ make install    # Installs cluster-* tools to ~/.local/bin
 
 ## Configuration
 
-Uses current `kubectl` context. Optionally reads `k8-util-config.yaml` for tier groupings and status patterns (see [k8-lib README](../k8-lib/README.md)). Every tool accepts `--config <path>` to specify an alternative config file.
+Uses current `kubectl` context. Optionally reads `infra-config.yaml` for tier groupings and status patterns (see [k8-lib README](../k8-lib/README.md)). Every tool accepts `--config <path>` to specify an alternative config file.
 
 ## Tools
 
@@ -57,7 +57,7 @@ Requires root/sudo. Run on the target VM (not the dev machine).
 
 #### Configuration
 
-In `k8-util-config.yaml`:
+In `infra-config.yaml`:
 
 ```yaml
 telemetry:
