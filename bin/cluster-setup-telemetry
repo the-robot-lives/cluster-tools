@@ -55,6 +55,8 @@ unset _k8_arg _k8_prev
 # k8-lib is optional for this tool — it runs on remote VMs that may not have it
 if [[ -f "$K8_LIB_DIR/bin/config.sh" ]]; then
   source "$K8_LIB_DIR/bin/config.sh"
+source "$K8_LIB_DIR/bin/assist.sh"
+_k8_check_assist "$0" "$@"
   _HAS_K8_LIB=true
 else
   _HAS_K8_LIB=false
