@@ -1,41 +1,71 @@
-# Project Layout
+# Project Layout — cluster-utils
 
-`cluster-utils` is a terminal utility package of Kubernetes cluster inspection dashboards
-(`cluster-*` commands) installed to `~/.local/bin` via `make install`. Bash scripts use
-the current `kubectl` context and optionally read `infra-config.yaml` (via the shared
-`k8-lib` library, see [PROJ-ARCH.md](PROJ-ARCH.md)) for tier groupings and status patterns.
+Terminal utility package: Kubernetes cluster inspection dashboards (`cluster-*`)
+and a remote-host telemetry installer. Bash scripts use the current `kubectl`
+context and optionally read monorepo `infra-config.yaml` via shared **k8-lib**.
+Installs to `~/.local/bin` via `make install` (or monorepo
+`make install-utilities`). Dual-path:
+`Portfolio/Utilities/source/cluster-utils` ↔ `utilities/k8/cluster-utils`.
+
+Plain tree: [PROJ-LAYOUT.summary.md](PROJ-LAYOUT.summary.md).
+Arch: [PROJ-ARCH.md](PROJ-ARCH.md). How-to: [PROJ-HOWTO.md](PROJ-HOWTO.md).
 
 ```
 cluster-utils/
-├── bin/                            # Executable bash tools (installed as-is to ~/.local/bin)
-│   ├── cluster-status              #   Tiered pod dashboard grouped by category; --watch auto-refresh
-│   ├── cluster-nodes               #   Node layout: capacity type, CPU/RAM reservations; --pods placement
-│   ├── cluster-resources           #   Per-pod CPU/RAM usage vs requests (requires metrics-server)
-│   ├── cluster-helm                #   Helm release status with failure highlighting
-│   ├── cluster-layout              #   Node/pod/PVC/PV layout as rendered markdown (uses glow)
-│   ├── cluster-manticore           #   Manticore search dashboard: readers, index versions, S3, jobs
-│   └── cluster-setup-telemetry     #   Install OTel Collector + Fluent Bit on a VM/EC2 (run on target host)
-├── docs/                           # Documentation
-│   ├── PROJ-ARCH.md                #   Architecture overview
-│   ├── PROJ-ARCH.summary.md        #   Architecture summary (companion)
-│   ├── PROJ-LAYOUT.md              #   This file
-│   ├── PROJ-LAYOUT.summary.md      #   Layout summary (companion)
-│   └── arch/                       #   Detailed architecture notes
-│       ├── installation.md         #     Install flow details
-│       └── shared-library.md       #     k8-lib shared shell library usage
-├── .gitignore                      # Ignores .env, .envrc.local, editor swap files
-├── Makefile                        # `make install` → copies bin/cluster-* to ~/.local/bin (INSTALL_DIR overridable)
-└── README.md                       # Start here — tool table, prerequisites, telemetry setup config
+├── bin/                            # Bash tools → ~/.local/bin (install -m 755)
+│   ├── cluster-status              #   Tiered pod dashboard; --watch
+│   ├── cluster-nodes               #   Node capacity/reservations; --pods
+│   ├── cluster-resources           #   Pod usage vs requests (metrics-server)
+│   ├── cluster-helm                #   Helm release status + failure highlight
+│   ├── cluster-layout              #   Node/pod/PVC/PV markdown (glow)
+│   ├── cluster-manticore           #   Manticore: readers, indexes, S3, jobs
+│   └── cluster-setup-telemetry     #   OTel Collector + Fluent Bit on VM/EC2
+├── docs/
+│   ├── PROJ-ARCH.md(+.summary)     #   Architecture + quick reference
+│   ├── PROJ-LAYOUT.md(+.summary)   #   This file + tree-only companion
+│   ├── PROJ-HOWTO.md(+.summary)    #   Task guides index + companion
+│   ├── PROJ-FAQ.md(+.summary)      #   FAQ + companion
+│   ├── arch/
+│   │   ├── installation.md         #     Install flow / k8-lib dependency
+│   │   └── shared-library.md       #     k8-lib modules sourced at runtime
+│   └── howto/
+│       └── setup-telemetry.md      #     Remote telemetry install walkthrough
+├── CHANGELOG.md                    # Package changelog / milestones
+├── .gitignore                      # .DS_Store, editor swap, .env, .envrc.local
+├── Makefile                        # compile/test no-ops; install → INSTALL_DIR
+└── README.md                       # Start here — prereqs, tools table, telemetry
 ```
 
-## Key Files Requiring Setup
+## Install mapping (`make install`)
 
-| File | Action |
-|------|--------|
-| `infra-config.yaml` (repo root, optional) | Provides tier groupings, status patterns, and `telemetry:` settings; every tool accepts `--config <path>` |
-| `~/.local/share/k8-lib/` | Shared shell library installed by the parent repo's `make install-utilities`; optional for `cluster-setup-telemetry` |
+| Source | Install path | Method |
+|--------|--------------|--------|
+| `bin/cluster-*` (all seven) | `~/.local/bin/<basename>` | copy (`install -m 755`) |
+
+Override destination: `INSTALL_DIR=/other/path make install`. Globs
+`bin/cluster-*` only — no completions package.
 
 ## Notes
 
-- No `lib/` folder — shared logic lives in the repo-level `k8-lib` package, sourced at runtime.
-- `cluster-setup-telemetry` is the only tool run on remote hosts (requires root/sudo); all values overridable via `K8_TELEMETRY_*` env vars.
+- **No `lib/`** — shared logic is monorepo **k8-lib** at
+  `~/.local/share/k8-lib` (`K8_LIB_DIR` override). Dashboards require it;
+  `cluster-setup-telemetry` treats it as optional (remote VM fallbacks).
+- **Config** (not in this package): `infra-config.yaml` / `.infra-config.yaml`
+  at cwd or monorepo root. Tiers, status patterns, `telemetry:` block.
+  Every tool accepts `--config <path>` (pre-parsed into `K8_CONFIG` before
+  k8-lib source). Missing config → built-in defaults.
+- **Prerequisites**: `kubectl`; `helm` for `cluster-helm`; metrics-server for
+  `cluster-resources`; optional `glow` for `cluster-layout`.
+- **`cluster-setup-telemetry`**: run on target host with root/sudo (not typical
+  dev machine). Values overridable via `K8_TELEMETRY_*` and service monitor
+  env vars — see README / [howto/setup-telemetry.md](howto/setup-telemetry.md).
+- **Makefile**: `compile` / `test` are no-ops; only `install` does work.
+
+## Key Files Requiring Setup
+
+| File / artifact | Action |
+|-----------------|--------|
+| `infra-config.yaml` (optional) | Tier groupings, status patterns, `telemetry:` for setup-telemetry |
+| `~/.local/share/k8-lib/` | Install via monorepo `make install-utilities` (required for dashboards) |
+| `kubectl` context | Point at target cluster before running dashboards |
+| `K8_TELEMETRY_*` / monitor creds | Optional overrides when installing telemetry on a host |
