@@ -141,5 +141,6 @@ Scripts use absolute `$K8_LIB_DIR`, so installed copies are path-independent.
 ## Related docs
 
 - Layout tree: [PROJ-LAYOUT.md](PROJ-LAYOUT.md)
+- Config/env artifacts: [PROJ-SCHEMA.md](PROJ-SCHEMA.md) (no persistence layer)
 - Tasks: [PROJ-HOWTO.md](PROJ-HOWTO.md)
 - Telemetry walkthrough: [howto/setup-telemetry.md](howto/setup-telemetry.md)
