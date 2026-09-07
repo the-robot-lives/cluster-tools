@@ -14,6 +14,7 @@ cluster-utils/
 │   ├── arch/                   # installation, shared-library
 │   └── howto/                  # setup-telemetry
 ├── CHANGELOG.md
+├── merge-notes.md                  # branch-sweep audit trail
 ├── Makefile                    # make install → ~/.local/bin
 └── README.md
 ```

@@ -31,6 +31,7 @@ cluster-utils/
 │   └── howto/
 │       └── setup-telemetry.md      #     Remote telemetry install walkthrough
 ├── CHANGELOG.md                    # Package changelog / milestones
+├── merge-notes.md                  # Branch-sweep audit trail (sep-1 sweep 2026-09-01)
 ├── .gitignore                      # .DS_Store, editor swap, .env, .envrc.local
 ├── Makefile                        # compile/test no-ops; install → INSTALL_DIR
 └── README.md                       # Start here — prereqs, tools table, telemetry
