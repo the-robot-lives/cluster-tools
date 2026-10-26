@@ -16,8 +16,11 @@ from the monorepo **k8-lib** package, sourced at runtime from
 `infra-config.yaml` via k8-lib’s `config-resolver.sh`. Built-in defaults apply when
 config is missing.
 
-Package location (dual path in monorepo):
-`Portfolio/Utilities/source/cluster-utils` ↔ `utilities/k8/cluster-utils`.
+Package location: submodule `Projects/cluster-tools` (remote
+`the-robot-lives/cluster-tools`), aliased inside the monorepo by the tracked
+symlink `Portfolio/Utilities/cluster` → `../../Projects/cluster-tools`.
+The former `Portfolio/Utilities/source/cluster-utils` ↔ `utilities/k8/cluster-utils`
+paths no longer exist.
 
 ## System Diagram
 
@@ -98,6 +101,26 @@ Scripts use absolute `$K8_LIB_DIR`, so installed copies are path-independent.
 
 → Details: [arch/installation.md](arch/installation.md)
 
+## Telemetry install (deployed shape)
+
+`cluster-setup-telemetry` is the only component that mutates a host. It runs as
+root and leaves two systemd services plus generated configs:
+
+| Surface | Path / binding |
+|---------|----------------|
+| Collector binary | `/opt/signoz-otel-collector/bin/signoz-otel-collector` (user `signoz-otel-collector`, no login shell) |
+| Collector config | `/etc/signoz-otel-collector/config.yaml` |
+| Unit | package unit, else `/etc/systemd/system/signoz-otel-collector.service` |
+| Fluent Bit config | `/etc/fluent-bit/fluent-bit.conf` + `parsers.conf`, buffer `/var/lib/fluent-bit` |
+| Local log path | Fluent Bit `forward` → `127.0.0.1:24224` → collector `fluentforward` receiver |
+| Egress | OTLP gRPC to `<endpoint:port>` (default port 4317) |
+| Listening ports | Fluent Bit HTTP `0.0.0.0:2020`; collector `health_check 0.0.0.0:13133`, `zpages 0.0.0.0:55679` |
+
+Service users are added to `adm` + `systemd-journal` (log read), and to `docker`
+when a Docker daemon is detected.
+
+→ Trust boundaries and open findings: [THREAT-MODEL.md](THREAT-MODEL.md)
+
 ## Key Decisions
 
 | Decision | Rationale |
@@ -144,5 +167,6 @@ Scripts use absolute `$K8_LIB_DIR`, so installed copies are path-independent.
 
 - Layout tree: [PROJ-LAYOUT.md](PROJ-LAYOUT.md)
 - Config/env artifacts: [PROJ-SCHEMA.md](PROJ-SCHEMA.md) (no persistence layer)
+- Security posture: [THREAT-MODEL.md](THREAT-MODEL.md)
 - Tasks: [PROJ-HOWTO.md](PROJ-HOWTO.md)
 - Telemetry walkthrough: [howto/setup-telemetry.md](howto/setup-telemetry.md)

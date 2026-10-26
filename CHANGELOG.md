@@ -1,5 +1,8 @@
 # Changelog — utilities/k8/cluster-utils
 
+## 2026-10-26
+- Doc-sweep: refreshed `PROJ-LAYOUT`/`PROJ-ARCH`/`PROJ-SCHEMA` (+summaries) for the current `Projects/cluster-tools` registration and generated-config paths, added `docs/THREAT-MODEL.md` + summary (register T-001..T-015), and seeded `.meta/pointers.yaml` with 9 file pointers (#3)
+
 ## [Unreleased]
 - Expanded architecture docs and added layout docs: new `docs/PROJ-LAYOUT.md` + summary, reworked `docs/PROJ-ARCH.md`/summary, refreshed `docs/arch/installation.md` and `docs/arch/shared-library.md` (`ff72b3565bf`, 2026-07-16)
 - Added task-oriented `docs/PROJ-HOWTO.md` + summary, plus extracted `docs/howto/setup-telemetry.md`, covering install/verify, each dashboard, `--assist`, `--config`, and remote telemetry setup (2026-07-17)

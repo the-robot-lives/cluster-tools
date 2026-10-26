@@ -10,7 +10,7 @@ Kubernetes cluster dashboards and inspection utilities — tiered pod health, no
 
 Reading a self-hosted cluster's state through raw `kubectl` means retyping namespace/label queries and mentally joining pods, nodes, PVCs, and Helm releases. The `cluster-*` tools render that as color-coded dashboards grouped by the Noizu deploy tiers (`.infra-config.yaml`), so an operator sees what's healthy and what's broken at a glance.
 
-Part of the Noizu utilities fleet (`Portfolio/Utilities/source/*`, k8/deploy group); also installed via the monorepo root `make install-utilities`. Coupled to the trl-infra `terraform/` + `.infra-config.yaml`; shares `k8-lib`.
+Part of the Noizu utilities fleet (submodule `Projects/cluster-tools`, aliased at `Portfolio/Utilities/cluster`); also installed via the monorepo root `make install-utilities`. Coupled to the trl-infra `terraform/` + `.infra-config.yaml`; shares `k8-lib`.
 
 ## Getting Started
 

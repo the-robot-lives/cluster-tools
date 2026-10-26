@@ -6,16 +6,27 @@ Terminal utility package: Kubernetes cluster inspection dashboards (`cluster-*`)
 and a remote-host telemetry installer. Bash scripts use the current `kubectl`
 context and optionally read monorepo `infra-config.yaml` via shared **k8-lib**.
 Installs to `~/.local/bin` via `make install` (or monorepo
-`make install-utilities`). Dual-path:
-`Portfolio/Utilities/source/cluster-utils` ↔ `utilities/k8/cluster-utils`.
+`make install-utilities`).
+
+**Registration (current).** One git repo, two names in the monorepo:
+
+| Path | Kind |
+|------|------|
+| `Projects/cluster-tools` | submodule (`git@github.com:the-robot-lives/cluster-tools.git`) — the checkout |
+| `Portfolio/Utilities/cluster` | tracked symlink → `../../Projects/cluster-tools` (monorepo-side alias) |
+
+The older `Portfolio/Utilities/source/cluster-utils` ↔ `utilities/k8/cluster-utils`
+dual registration is retired — neither path exists in the monorepo.
+The package name in prose (`cluster-utils`) survives in doc titles; the repo is
+`cluster-tools`.
 
 Plain tree: [PROJ-LAYOUT.summary.md](PROJ-LAYOUT.summary.md).
 Arch: [PROJ-ARCH.md](PROJ-ARCH.md). How-to: [PROJ-HOWTO.md](PROJ-HOWTO.md).
 
 ```
-cluster-utils/
+cluster-tools/
 ├── bin/                            # Bash tools → ~/.local/bin (install -m 755)
-│   ├── cluster-status              #   Tiered pod dashboard; --watch
+│   ├── cluster-status              #   Pod dashboard by name-pattern section; --watch
 │   ├── cluster-nodes               #   Node capacity/reservations; --pods
 │   ├── cluster-resources           #   Pod usage vs requests (metrics-server)
 │   ├── cluster-helm                #   Helm release status + failure highlight
@@ -25,13 +36,17 @@ cluster-utils/
 ├── docs/
 │   ├── PROJ-ARCH.md(+.summary)     #   Architecture + quick reference
 │   ├── PROJ-LAYOUT.md(+.summary)   #   This file + tree-only companion
+│   ├── PROJ-SCHEMA.md(+.summary)   #   Config/env artifacts (no persistence layer)
 │   ├── PROJ-HOWTO.md(+.summary)    #   Task guides index + companion
 │   ├── PROJ-FAQ.md(+.summary)      #   FAQ + companion
+│   ├── THREAT-MODEL.md(+.summary)  #   Attack surface + vulnerability register
 │   ├── arch/
 │   │   ├── installation.md         #     Install flow / k8-lib dependency
 │   │   └── shared-library.md       #     k8-lib modules sourced at runtime
 │   └── howto/
 │       └── setup-telemetry.md      #     Remote telemetry install walkthrough
+├── .meta/pointers.yaml             # Doc-pointer store (doc-pointers build --write)
+├── AGENT.md / AGENTS.md / CLAUDE.md # Harness policy siblings (same branch/PR rules)
 ├── CHANGELOG.md                    # Package changelog / milestones
 ├── merge-notes.md                  # Branch-sweep audit trail (sep-1 sweep 2026-09-01)
 ├── .gitignore                      # .DS_Store, editor swap, .env, .envrc.local
@@ -63,6 +78,11 @@ Override destination: `INSTALL_DIR=/other/path make install`. Globs
   dev machine). Values overridable via `K8_TELEMETRY_*` and service monitor
   env vars — see README / [howto/setup-telemetry.md](howto/setup-telemetry.md).
 - **Makefile**: `compile` / `test` are no-ops; only `install` does work.
+- **Extensionless tools**: every file under `bin/` has no extension, so
+  file-extension-scoped tooling (doc-pointer scanner, editor language
+  detection) skips them. Doc markers therefore live on the markdown docs in
+  `docs/`, not on the scripts — see [PROJ-SCHEMA.md](PROJ-SCHEMA.md) for the
+  `.meta/pointers.yaml` store.
 
 ## Key Files Requiring Setup
 

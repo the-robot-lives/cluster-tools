@@ -17,7 +17,7 @@ For *what it is* see [PROJ-ARCH.md](PROJ-ARCH.md); for *where things live* see
    ```
    Or, to install just this package (you'll need `k8-lib` separately, see Gotchas):
    ```bash
-   cd utilities/k8/cluster-utils && make install
+   cd Projects/cluster-tools && make install   # or Portfolio/Utilities/cluster (same tree)
    ```
 2. Confirm the commands resolved:
    ```bash
