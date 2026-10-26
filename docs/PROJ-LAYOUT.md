@@ -1,5 +1,7 @@
 # Project Layout — cluster-utils
 
+<!-- 〚📁:a10e471b-ecb4-54a7-a1e0-68c6f2e4e09c〛 docs/PROJ-LAYOUT.md :: Repository layout tree: bin tools, docs set, Makefile/install mapping, key files requiring setup. -->
+
 Terminal utility package: Kubernetes cluster inspection dashboards (`cluster-*`)
 and a remote-host telemetry installer. Bash scripts use the current `kubectl`
 context and optionally read monorepo `infra-config.yaml` via shared **k8-lib**.

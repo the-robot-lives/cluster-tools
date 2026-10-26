@@ -1,5 +1,7 @@
 # cluster-tools
 
+<!-- 〚📁:e40b6fb5-8c2b-58df-837d-05cd83be4d03〛 README.md :: Repo entry point — prerequisites, seven-tool table, usage, telemetry installer config. -->
+
 **Repo:** https://github.com/the-robot-lives/cluster-tools
 
 Kubernetes cluster dashboards and inspection utilities — tiered pod health, node capacity, resource usage, Helm releases, storage layout, and remote telemetry bootstrap, from a single install.

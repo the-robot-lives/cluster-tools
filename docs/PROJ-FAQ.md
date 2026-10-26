@@ -1,5 +1,7 @@
 # cluster-utils — FAQ
 
+<!-- 〚📁:288729ce-6331-5995-b1f6-275cc185a155〛 docs/PROJ-FAQ.md :: FAQ — motivation, tool selection, config/cluster-access questions, telemetry installer caveats. -->
+
 Anticipated why/when/compared-to-what questions. For *how to run something* see
 [PROJ-HOWTO.md](PROJ-HOWTO.md); for *what it is* see [PROJ-ARCH.md](PROJ-ARCH.md).
 

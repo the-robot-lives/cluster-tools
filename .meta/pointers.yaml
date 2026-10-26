@@ -1,0 +1,110 @@
+---
+pointers:
+  288729ce-6331-5995-b1f6-275cc185a155:
+    created_at: 2026-10-26T21:31:06.854765Z
+    description: FAQ — motivation, tool selection, config/cluster-access questions, telemetry installer caveats.
+    file_path: docs/PROJ-FAQ.md
+    function: docs/PROJ-FAQ.md
+    kind: file
+    line: 3
+    locations:
+      - file_path: docs/PROJ-FAQ.md
+        line: 3
+    token: 𔋙𓐊𓣎𓀕
+    updated_at: 2026-10-26T21:31:06.854765Z
+  40bde602-757c-5c8b-9c3d-32631c9ac198:
+    created_at: 2026-10-26T21:31:06.854762Z
+    description: Task guides index — install/verify, per-dashboard usage, --assist, --config, remote telemetry setup.
+    file_path: docs/PROJ-HOWTO.md
+    function: docs/PROJ-HOWTO.md
+    kind: file
+    line: 3
+    locations:
+      - file_path: docs/PROJ-HOWTO.md
+        line: 3
+    token: 𓼠𓿒𓋒𓧈
+    updated_at: 2026-10-26T21:31:06.854762Z
+  57040ee8-c2d0-51c7-bf9f-65ff5eb28e41:
+    created_at: 2026-10-26T21:31:06.854759Z
+    description: Install flow — Makefile targets, INSTALL_DIR override, absolute-path k8-lib dependency.
+    file_path: docs/arch/installation.md
+    function: docs/arch/installation.md
+    kind: file
+    line: 3
+    locations:
+      - file_path: docs/arch/installation.md
+        line: 3
+    token: 𓴲𔑑𔎷𓩁
+    updated_at: 2026-10-26T21:31:06.854759Z
+  84822e4a-8978-597e-bdbc-f3f920256df1:
+    created_at: 2026-10-26T21:31:06.854755Z
+    description: Remote telemetry install walkthrough — endpoint, service detection, generated configs, verification.
+    file_path: docs/howto/setup-telemetry.md
+    function: docs/howto/setup-telemetry.md
+    kind: file
+    line: 3
+    locations:
+      - file_path: docs/howto/setup-telemetry.md
+        line: 3
+    token: 𓲱𓀣𔃭𓱑
+    updated_at: 2026-10-26T21:31:06.854755Z
+  a10e471b-ecb4-54a7-a1e0-68c6f2e4e09c:
+    created_at: 2026-10-26T21:31:06.854742Z
+    description: 'Repository layout tree: bin tools, docs set, Makefile/install mapping, key files requiring setup.'
+    file_path: docs/PROJ-LAYOUT.md
+    function: docs/PROJ-LAYOUT.md
+    kind: file
+    line: 3
+    locations:
+      - file_path: docs/PROJ-LAYOUT.md
+        line: 3
+    token: 𓘐𓛚𓵠𓍼
+    updated_at: 2026-10-26T21:31:06.854742Z
+  aa6b5441-d760-55b2-96ac-c566716b778a:
+    created_at: 2026-10-26T21:31:06.854769Z
+    description: k8-lib modules sourced at runtime (config, common, assist), source pattern, config precedence.
+    file_path: docs/arch/shared-library.md
+    function: docs/arch/shared-library.md
+    kind: file
+    line: 3
+    locations:
+      - file_path: docs/arch/shared-library.md
+        line: 3
+    token: 𔎄𓝲𓲏𔐊
+    updated_at: 2026-10-26T21:31:06.854769Z
+  e40b6fb5-8c2b-58df-837d-05cd83be4d03:
+    created_at: 2026-10-26T21:31:06.854745Z
+    description: Repo entry point — prerequisites, seven-tool table, usage, telemetry installer config.
+    file_path: README.md
+    function: README.md
+    kind: file
+    line: 3
+    locations:
+      - file_path: README.md
+        line: 3
+    token: 𓚅𓄸𓅐𓏣
+    updated_at: 2026-10-26T21:31:06.854745Z
+  f61f37d6-f3c6-59c7-83de-f58a9d23d18b:
+    created_at: 2026-10-26T21:31:06.854737Z
+    description: 'Architecture overview: seven cluster-* tools, k8-lib sourcing, system diagram, runtime flow, key decisions.'
+    file_path: docs/PROJ-ARCH.md
+    function: docs/PROJ-ARCH.md
+    kind: file
+    line: 3
+    locations:
+      - file_path: docs/PROJ-ARCH.md
+        line: 3
+    token: 𓉞𔓰𓸮𔁻
+    updated_at: 2026-10-26T21:31:06.854737Z
+  fecaf08c-c679-5cfd-8f25-a46dace9e656:
+    created_at: 2026-10-26T21:31:06.854720Z
+    description: 'Data-artifact schema: no persistence layer; infra-config.yaml telemetry block, env-var contract, host-generated configs.'
+    file_path: docs/PROJ-SCHEMA.md
+    function: docs/PROJ-SCHEMA.md
+    kind: file
+    line: 3
+    locations:
+      - file_path: docs/PROJ-SCHEMA.md
+        line: 3
+    token: 𓅇𔈢𓗃𓏦
+    updated_at: 2026-10-26T21:31:06.854720Z

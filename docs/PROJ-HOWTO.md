@@ -1,5 +1,7 @@
 # cluster-utils — How To
 
+<!-- 〚📁:40bde602-757c-5c8b-9c3d-32631c9ac198〛 docs/PROJ-HOWTO.md :: Task guides index — install/verify, per-dashboard usage, --assist, --config, remote telemetry setup. -->
+
 Task-oriented guides for the things you'll actually do with these `cluster-*` dashboards.
 For *what it is* see [PROJ-ARCH.md](PROJ-ARCH.md); for *where things live* see
 [PROJ-LAYOUT.md](PROJ-LAYOUT.md).
