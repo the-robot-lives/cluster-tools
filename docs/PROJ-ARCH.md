@@ -1,5 +1,7 @@
 # cluster-utils — Architecture
 
+<!-- 〚📁:f61f37d6-f3c6-59c7-83de-f58a9d23d18b〛 docs/PROJ-ARCH.md :: Architecture overview: seven cluster-* tools, k8-lib sourcing, system diagram, runtime flow, key decisions. -->
+
 ## Overview
 
 `cluster-utils` is a pure-Bash utility package of seven `cluster-*` commands for

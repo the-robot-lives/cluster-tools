@@ -1,5 +1,7 @@
 # How to: install telemetry collection on a VM/EC2 host
 
+<!-- 〚📁:84822e4a-8978-597e-bdbc-f3f920256df1〛 docs/howto/setup-telemetry.md :: Remote telemetry install walkthrough — endpoint, service detection, generated configs, verification. -->
+
 **Goal:** Get an OTel Collector + Fluent Bit shipping metrics/logs from a non-Kubernetes
 host (a VM or EC2 instance) to a central OTLP endpoint, with auto-detected scraping for
 PostgreSQL, MySQL, Nginx, Redis, and Docker.

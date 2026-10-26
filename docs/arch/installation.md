@@ -1,5 +1,7 @@
 # Installation
 
+<!-- 〚📁:57040ee8-c2d0-51c7-bf9f-65ff5eb28e41〛 docs/arch/installation.md :: Install flow — Makefile targets, INSTALL_DIR override, absolute-path k8-lib dependency. -->
+
 ## Makefile
 
 The `Makefile` provides three targets:

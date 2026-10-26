@@ -1,5 +1,7 @@
 # Project Schema — cluster-utils
 
+<!-- 〚📁:fecaf08c-c679-5cfd-8f25-a46dace9e656〛 docs/PROJ-SCHEMA.md :: Data-artifact schema: no persistence layer; infra-config.yaml telemetry block, env-var contract, host-generated configs. -->
+
 > **No persistence layer.** This package has **no database, no SQL schema, and no
 > Liquibase changelogs**. All `cluster-*` dashboards are read-only views over a
 > live Kubernetes cluster (via `kubectl`/`helm`); nothing is written to disk on

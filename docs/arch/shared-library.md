@@ -1,5 +1,7 @@
 # Shared Library — k8-lib
 
+<!-- 〚📁:aa6b5441-d760-55b2-96ac-c566716b778a〛 docs/arch/shared-library.md :: k8-lib modules sourced at runtime (config, common, assist), source pattern, config precedence. -->
+
 `cluster-utils` contains no library code of its own. All shared logic comes from the
 repo-level **k8-lib** package (monorepo `share/k8-lib/`, installed to
 `~/.local/share/k8-lib` by the parent repo's `make install-utilities`).
