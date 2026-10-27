@@ -1,5 +1,8 @@
 # Changelog — utilities/k8/cluster-utils
 
+## 2026-10-28
+- docs: add AGENT-README.md (agent orientation)
+
 ## 2026-10-26
 - Doc-sweep: refreshed `PROJ-LAYOUT`/`PROJ-ARCH`/`PROJ-SCHEMA` (+summaries) for the current `Projects/cluster-tools` registration and generated-config paths, added `docs/THREAT-MODEL.md` + summary (register T-001..T-015), and seeded `.meta/pointers.yaml` with 9 file pointers (#3)
 
